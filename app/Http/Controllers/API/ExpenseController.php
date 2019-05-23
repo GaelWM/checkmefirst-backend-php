@@ -17,7 +17,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        return Expense::all()->toJson();
+        return Expense::all();
     }
 
     /**
