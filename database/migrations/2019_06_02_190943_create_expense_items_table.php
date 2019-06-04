@@ -18,6 +18,7 @@ class CreateExpenseItemsTable extends Migration
             $table->unsignedInteger('expense_id');
             $table->unsignedInteger('category_id');
             $table->string('name', 100);
+            $table->double('quantity')->nullable();
             $table->string('currency', 10);
             $table->double('cost');
             $table->boolean('is_done')->default(1);
