@@ -18,7 +18,7 @@ class CreateExpensesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->date('date_created');
+            $table->datetime('date_created');
             $table->boolean('is_active')->default(1);
             $table->timestamps();
 

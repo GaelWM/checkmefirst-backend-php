@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class UserRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,6 +25,8 @@ class UserRequest extends FormRequest
     {
         $rules = [];
 
+        //dd($this->method());
+
         switch ($this->method())
         {
             case "POST":
@@ -33,7 +35,7 @@ class UserRequest extends FormRequest
                     'surname' => 'required',
                     'email' => 'required|email|unique:users',
                     'password' => 'required',
-                    'c_password' => 'required|same:password','name'
+                    'c_password' => 'required|same:password',
                 ];
                 break;
 
@@ -44,7 +46,7 @@ class UserRequest extends FormRequest
                     'surname' => 'required',
                     'email' => 'required|email',
                     'password' => 'required',
-                    'c_password' => 'required|same:password','name'
+                    'c_password' => 'required|same:password',
                 ];
                 break;
         }

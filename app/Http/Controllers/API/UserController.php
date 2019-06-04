@@ -29,17 +29,19 @@ class UserController extends Controller
             return response()->json(['error'=>'Unauthorised'], 401);
         }
     }
+
     /**
      * Register api
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function register(UserRequest $userRequest)
     {
-//        $validator = Validator::make($userRequest->all(), [
+//        $validator = Validator::make($request->all(), [
 //            'name' => 'required',
 //            'surname' => 'required',
-//            'email' => 'required|email',
+//            'email' => 'required|email|unique:users',
 //            'password' => 'required',
 //            'c_password' => 'required|same:password',
 //        ]);
@@ -77,19 +79,32 @@ class UserController extends Controller
     }
 
 
+    /**
+     * @param User $user
+     * @return UserResource
+     */
     public function show(User $user)
     {
         return new UserResource($user);
     }
 
 
+    /**
+     * @param UserRequest $userRequest
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(UserRequest $userRequest, User $user)
     {
         $user->update(User::userRequest($userRequest));
-        return response()->json(new UserResource($user), 200);
+        return response()->json(new UserResource($user), 201);
     }
 
 
+    /**
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(User $user)
     {
         $user->delete();

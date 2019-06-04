@@ -22,6 +22,7 @@ class CreateExpenseItemsTable extends Migration
             $table->string('currency', 10);
             $table->double('cost');
             $table->boolean('is_done')->default(1);
+            $table->boolean('is_active')->default(1);
             $table->datetime('date_created');
             $table->text('notes')->nullable();
             $table->timestamps();

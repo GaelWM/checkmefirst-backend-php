@@ -21,9 +21,9 @@ class ExpenseResource extends JsonResource
             'description' => $this->description,
             'date_created' => $this->date_created,
             'is_active' => $this->is_active,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'user' => UserResource::collection($this->user),
+            'created_at' => $this->created_at->toDateTimeString(),
+            'updated_at' => $this->updated_at->toDateTimeString(),
+            'user' => new UserResource($this->user),
         ];
     }
 }

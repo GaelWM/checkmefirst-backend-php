@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ExpenseItemRequest extends FormRequest
+class ExpenseItemRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class ExpenseItemRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class ExpenseItemRequest extends FormRequest
         {
             case "POST":
                 $rules = [
-                    'expense_id' => 'required|',
-                    'category_id' => 'required|',
+                    'expense_id' => 'required|numeric',
+                    'category_id' => 'required|numeric',
                     'name' => 'required|unique:expense_items',
                     'quantity' => 'nullable|',
                     'cost' => 'required|',
@@ -44,8 +44,8 @@ class ExpenseItemRequest extends FormRequest
 
             case "PATCH":
                 $rules = [
-                    'expense_id' => 'required|',
-                    'category_id' => 'required|',
+                    'expense_id' => 'required|numeric',
+                    'category_id' => 'required|numeric',
                     'name' => 'required|',
                     'quantity' => 'nullable|',
                     'cost' => 'required|',
