@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\ExpenseItem;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ExpenseItemRequest;
 use App\Http\Resources\ExpenseItemResource;
 use App\Http\Resources\ExpenseResource;
 
@@ -37,9 +38,9 @@ class ExpenseItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ExpenseItemRequest $expenseItemRequest)
     {
-        $expenseItem = (new ExpenseItem())->createModel($request);
+        $expenseItem = (new ExpenseItem())->createModel($expenseItemRequest);
         return response()->json(new ExpenseResource($expenseItem), 201);
     }
 
@@ -67,9 +68,9 @@ class ExpenseItemController extends Controller
      * @param  \App\ExpenseItem  $expenseItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ExpenseItem $expenseItem)
+    public function update(ExpenseItemRequest $expenseItemRequest, ExpenseItem $expenseItem)
     {
-        $expenseItem = $expenseItem->updateModel($request, $expenseItem);
+        $expenseItem = $expenseItem->updateModel($expenseItemRequest, $expenseItem);
         return response()->json(new ExpenseResource($expenseItem), 200);
     }
 

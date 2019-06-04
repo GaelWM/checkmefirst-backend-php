@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
@@ -33,21 +34,21 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request)
+    public function register(UserRequest $userRequest)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'surname' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'c_password' => 'required|same:password',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);
-        }
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-        $user = User::create(User::userRequest($request));
+//        $validator = Validator::make($userRequest->all(), [
+//            'name' => 'required',
+//            'surname' => 'required',
+//            'email' => 'required|email',
+//            'password' => 'required',
+//            'c_password' => 'required|same:password',
+//        ]);
+//        if ($validator->fails()) {
+//            return response()->json(['error'=>$validator->errors()], 401);
+//        }
+        //$input = $request->all();
+        //$input['password'] = bcrypt($input['password']);
+        $user = User::create(User::userRequest($userRequest));
         $success['token'] =  $user->createToken('check-me-first-backend')->accessToken;
         $success['name'] =  $user->name;
         return response()->json(['success'=>$success], $this->successStatus);
@@ -63,14 +64,36 @@ class UserController extends Controller
         return response()->json(['success' => $user], $this->successStatus);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
+
     public function index()
     {
         return UserResource::collection(User::latest()->get());
+    }
+
+    public function store(UserRequest $userRequest)
+    {
+        $user = (new User())->create(User::userRequest($userRequest));
+        return response()->json(new UserResource($user), 201);
+    }
+
+
+    public function show(User $user)
+    {
+        return new UserResource($user);
+    }
+
+
+    public function update(UserRequest $userRequest, User $user)
+    {
+        $user->update(User::userRequest($userRequest));
+        return response()->json(new UserResource($user), 200);
+    }
+
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return response()->json(["User deleted"], 204);
     }
 
 

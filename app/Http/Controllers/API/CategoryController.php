@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
 
@@ -35,9 +36,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $categoryRequest)
     {
-        $category = (new Category())->createModel($request);
+        $category = (new Category())->createModel($categoryRequest);
         return response()->json(new CategoryResource($category), 201);
     }
 
@@ -70,9 +71,9 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $categoryRequest, Category $category)
     {
-        $category = $category->updateModel($request, $category);
+        $category = $category->updateModel($categoryRequest, $category);
         return response()->json(new CategoryResource($category), 200);
     }
 
