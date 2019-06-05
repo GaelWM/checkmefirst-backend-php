@@ -41,7 +41,7 @@ class ExpenseItemController extends Controller
     public function store(ExpenseItemRequest $expenseItemRequest)
     {
         $expenseItem = (new ExpenseItem())->createModel($expenseItemRequest);
-        return response()->json(new ExpenseResource($expenseItem), 201);
+        return response()->json(new ExpenseItemResource($expenseItem), 201);
     }
 
 
@@ -71,7 +71,7 @@ class ExpenseItemController extends Controller
     public function update(ExpenseItemRequest $expenseItemRequest, ExpenseItem $expenseItem)
     {
         $expenseItem = $expenseItem->updateModel($expenseItemRequest, $expenseItem);
-        return response()->json(new ExpenseResource($expenseItem), 200);
+        return response()->json(new ExpenseItemResource($expenseItem), 200);
     }
 
     /**
